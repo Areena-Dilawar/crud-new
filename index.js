@@ -18,7 +18,7 @@ app.post("/create", (req, res) => {
         return res.status(400).json({ message: "Name, year, and author are required." });
     }
     const newBook = {
-        id: book.length ? book[book.length - 1].id + 1 : 1, 
+        id: book.length ? book[book.length - 1].id + 1 : 1,
         name,
         year,
         author,
