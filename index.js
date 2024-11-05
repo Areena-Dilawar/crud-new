@@ -12,11 +12,20 @@ app.listen(3000, () => {
     console.log("Server is running on 3000");
 })
 
-app.post("/create", (req, res)=>{
-    const newBook =req.body
-    book.push(newBook)
-    res.json(book)
-})
+app.post("/create", (req, res) => {
+    const { name, year, author } = req.body;
+    if (!name || !year || !author) {
+        return res.status(400).json({ message: "Name, year, and author are required." });
+    }
+    const newBook = {
+        id: book.length ? book[book.length - 1].id + 1 : 1, 
+        name,
+        year,
+        author,
+    };
+    book.push(newBook);
+    res.status(201).json({ message: "Book added successfully", newBook });
+});
 
 app.get("/read", (req, res) => {
     res.json(book);
@@ -57,5 +66,17 @@ app.put("/update/:id", (req, res) => {
         res.json(book[bookIndex]);
     } else {
         res.status(404).json({ message: "Book not found" }); 
+    }
+});
+
+app.delete("/delete/:id", (req, res) => {
+    const bookId = parseInt(req.params.id); 
+    const bookIndex = book.findIndex(b => b.id === bookId);
+
+    if (bookIndex !== -1) {
+        const deletedBook = book.splice(bookIndex, 1);
+        res.json({ message: "Book deleted successfully", deletedBook });
+    } else {
+        res.status(404).json({ message: "Book not found" });
     }
 });
