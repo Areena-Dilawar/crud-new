@@ -45,3 +45,17 @@ app.get("/items/search", (req, res) => {
     res.json(filteredItems);
 });
 
+app.put("/update/:id", (req, res) => {
+    const bookId = parseInt(req.params.id);
+    const updatedData = req.body;
+    const bookIndex = book.findIndex(b => b.id === bookId);
+    if (bookIndex !== -1) {
+        if (updatedData.name) book[bookIndex].name = updatedData.name;
+        if (updatedData.year) book[bookIndex].year = updatedData.year;
+        if (updatedData.author) book[bookIndex].author = updatedData.author;
+
+        res.json(book[bookIndex]);
+    } else {
+        res.status(404).json({ message: "Book not found" }); 
+    }
+});
