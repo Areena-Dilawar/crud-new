@@ -11,8 +11,6 @@ let book = [
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
 });
-
-// Create a new book
 app.post("/create", (req, res) => {
     const { name, year, author } = req.body;
     if (!name || !year || !author) {
@@ -28,7 +26,6 @@ app.post("/create", (req, res) => {
     res.status(201).json({ message: "Book added successfully", newBook });
 });
 
-// Read all books
 app.get("/read", (req, res) => {
     res.json(book);
 });
@@ -47,7 +44,7 @@ app.get("/read/:id", (req, res) => {
 // Search books by name
 app.get("/read/search", (req, res) => {
     const nameQuery = req.query.name;
-    console.log("Received search query:", nameQuery); // Log the search query
+    console.log("Received search query:", nameQuery); 
     if (!nameQuery) {
         return res.status(400).json({ message: "Name query parameter is required." });
     }
@@ -62,7 +59,6 @@ app.get("/read/search", (req, res) => {
     }
 });
 
-// Update a book by ID
 app.put("/update/:id", (req, res) => {
     const bookId = parseInt(req.params.id);
     const updatedData = req.body;
@@ -78,7 +74,6 @@ app.put("/update/:id", (req, res) => {
     }
 });
 
-// Delete a book by ID
 app.delete("/delete/:id", (req, res) => {
     const bookId = parseInt(req.params.id);
     const bookIndex = book.findIndex(b => b.id === bookId);
