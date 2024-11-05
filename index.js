@@ -43,16 +43,19 @@ app.get("/read/:id", (req, res) => {
 });
 
 //Return a single item by ID
-app.get("/read/search", (req, res) => {
+app.get("/items/search", (req, res) => {
     const nameQuery = req.query.name;
-    if(!nameQuery){
-        return res.status(400).json({ message:"Name query parameter is required."});
+    if (!nameQuery) {
+        return res.status(400).json({ message: "Name query parameter is required." });
     }
-    const filteredItems = book.filter(books=>
-        books.name.toLowerCase().includes(nameQuery.toLowerCase())
-    )
+    
+    const filteredItems = book.filter(bookItem =>
+        bookItem.name.toLowerCase().includes(nameQuery.toLowerCase())
+    );
+    
     res.json(filteredItems);
 });
+
 
 app.put("/update/:id", (req, res) => {
     const bookId = parseInt(req.params.id);
