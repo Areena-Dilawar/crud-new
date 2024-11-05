@@ -33,7 +33,7 @@ app.get("/read", (req, res) => {
 
 //Return a single item by ID
 app.get("/read/:id", (req, res) => {
-    const bookId = parseInt(req.params.id);
+    const bookId = parseInt(req.params.id, 10);
     const item = book.find(i => i.id === bookId);
     if (item) {
         res.json(item);
