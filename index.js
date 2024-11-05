@@ -43,7 +43,7 @@ app.get("/read/:id", (req, res) => {
 });
 
 //Return a single item by ID
-app.get("/items/search", (req, res) => {
+app.get("/read/search", (req, res) => {
     const nameQuery = req.query.name;
     if (!nameQuery) {
         return res.status(400).json({ message: "Name query parameter is required." });
